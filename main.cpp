@@ -52,8 +52,6 @@ int main(int argv, char** argc){
     pointer = cardBST1.getSuccessor(pointer);
   }
   matches = matches;
-  int space = matches;
-  cout<<matches<<endl;
   
   while(matches != 0){
     int count = 0;
@@ -73,8 +71,6 @@ int main(int argv, char** argc){
       alice = cardBST1.getSuccessor(alice);
     }
 
-    cout<<matches<<endl;
-
     count--;
     while((count == 0) && (matches != 0)){
       if(cardBST1.contains(bob)){
@@ -91,14 +87,9 @@ int main(int argv, char** argc){
       }
       bob = cardBST2.getPredecessor(bob);
     }
-
-    cout<<matches<<endl;
   }
 
-  if(space > 0){
-    cout<<endl;
-  }
-
+  cout<<endl;
   cout<<"Alice's cards:"<<endl;
   cardBST1.printInOrder();
   

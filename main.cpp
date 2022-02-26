@@ -51,7 +51,6 @@ int main(int argv, char** argc){
     }
     pointer = cardBST1.getSuccessor(pointer);
   }
-  matches = matches;
   
   while(matches != 0){
     int count = 0;
@@ -65,7 +64,7 @@ int main(int argv, char** argc){
         cardBST2.remove(alice);
         alice = aliceNext;
         count++;
-	matches--;
+	      matches--;
         break;
       }
       alice = cardBST1.getSuccessor(alice);

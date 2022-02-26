@@ -117,13 +117,13 @@ IntBST::Node* IntBST::getNodeFor(int value, Node* n) const{
         }
     }
     else{
-        return NULL;
+        return nullptr;
     }
 }
 
 // returns true if value is in the tree; false if not
 bool IntBST::contains(int value) const {
-    if(getNodeFor(value, root) != NULL){
+    if(getNodeFor(value, root) != nullptr){
         return true;
     }
     else{
@@ -201,8 +201,9 @@ IntBST::Node* IntBST::getSuccessorNode(int value) const{
 
 // returns the successor value of the given value or 0 if there is none
 int IntBST::getSuccessor(int value) const{
-    if(getSuccessorNode(value)){
-        return getSuccessorNode(value)->info;
+    Node* result = getSuccessorNode(value);
+    if(result){
+        return result->info;
     }
     else{
         return 0;
@@ -233,21 +234,35 @@ bool IntBST::remove(int value){
         else if(current->left && current->right){
             succ = getSuccessorNode(current->info);
             int succValue = succ->info;
+            string succCard = succ->card;
             remove(succ->info);
             current->info = succValue;
+            current->card = succCard;
+            root = current;
         }
         else if(current->left || current->right){
-            Node* child = current->left;
-            if(current->right != nullptr){
-                child = current->right;
+            if(current == root){
+                if(current->left){
+                    root = current->left;
+                }
+                else{
+                    root = current->right;
+                }
+                delete current;
             }
-            if(current->parent->left == current){
-                current->parent->left = child;
+            else{
+                Node* child = current->left;
+                if(current->right != nullptr){
+                    child = current->right;
+                }
+                if(current->parent->left == current){
+                    current->parent->left = child;
+                }
+                if(current->parent->right == current){
+                    current->parent->right = child;
+                }
+                delete current;
             }
-            if(current->parent->right == current){
-                current->parent->right = child;
-            }
-            delete current;
         }
         return true;
     }

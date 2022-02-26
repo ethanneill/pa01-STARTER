@@ -24,12 +24,12 @@ class IntBST {
     bool contains(int value) const;  // true if value is in tree
     int getSmallest() const;
     int getLargest() const;
-    string printCard(int value) const;
+    void printCard(int value) const;
 
     // THESE ARE HARDER! DO THESE LAST
     int getPredecessor(int value) const;       // returns the predecessor value of the given value or 0 if there is none
     int getSuccessor(int value) const;         // returns the successor value of the given value or 0 if there is none
-    bool remove(int value);                    // deletes the Node containing the given value from the tree
+    void remove(int value);                    // deletes the Node containing the given value from the tree
 
  private:
 

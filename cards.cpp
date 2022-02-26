@@ -210,70 +210,6 @@ int IntBST::getSuccessor(int value) const{
     }
 }
 
-// deletes the Node containing the given value from the tree
-// returns true if the node exist and was deleted or false if the node does not exist
-bool IntBST::remove(int value){
-    if(contains(value)){
-        Node* current = getNodeFor(value, root);
-        Node* succ = nullptr;
-        if(current->left == nullptr && current->right == nullptr){
-            if(current == root){
-                delete current;
-                root = nullptr;
-            }
-            else{
-                if(current->info < current->parent->info){
-                    current->parent->left = nullptr;
-                }
-                else{
-                    current->parent->right = nullptr;
-                }
-                delete current;
-            }
-        }
-        else if(current->left && current->right){
-            succ = getSuccessorNode(current->info);
-            int succValue = succ->info;
-            string succCard = succ->card;
-            remove(succ->info);
-            current->info = succValue;
-            current->card = succCard;
-            root = current;
-        }
-        else if(current->left || current->right){
-            if(current == root){
-                if(current->left){
-                    root = current->left;
-                    root->parent = nullptr;
-                }
-                else{
-                    root = current->right;
-                    root->parent = nullptr;
-                }
-                delete current;
-            }
-            else{
-                Node* child = current->left;
-                if(current->right != nullptr){
-                    child = current->right;
-                }
-                child->parent = current->parent;
-                if(current->parent->left == current){
-                    current->parent->left = child;
-                }
-                if(current->parent->right == current){
-                    current->parent->right = child;
-                }
-                delete current;
-            }
-        }
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
 int IntBST::getSmallest() const{
     Node* n = root;
     while(n->left){
@@ -290,7 +226,54 @@ int IntBST::getLargest() const{
     return n->info;
 }
 
-string IntBST::printCard(int value) const{
+void IntBST::printCard(int value) const{
     Node* n = getNodeFor(value, root);
-    return n->card;
+    cout<<n->card;
+}
+
+void IntBST::remove(int value){
+    if(contains(value)){
+        Node* current = getNodeFor(value, root);
+        
+        if((!current->left) && (!current->right)){
+            if(current == root){
+                delete current;
+                root = nullptr;
+            }
+            else if(current->parent->right == current){
+                current->parent->right = nullptr;
+                delete current;
+            }
+            else if(current->parent->left == current){
+                current->parent->left = nullptr;
+                delete current;
+            }
+        }
+        else if(current->right){
+            Node* succ = current->right;
+            while(succ->left){
+                succ = succ->left;
+            }
+            Node* temp = new Node(0, "0");
+            temp->info = succ->info;
+            temp->card = succ->card;
+            remove(succ->info);
+            current->info = temp->info;
+            current->card = temp->card;
+            delete temp;
+        }
+        else if(current->left){
+            Node* succ = current->left;
+            while(succ->right){
+                succ = succ->right;
+            }
+            Node* temp = new Node(0, "0");
+            temp->info = succ->info;
+            temp->card = succ->card;
+            remove(succ->info);
+            current->info = temp->info;
+            current->card = temp->card;
+            delete temp;
+        }
+    }
 }

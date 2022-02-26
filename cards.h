@@ -24,7 +24,7 @@ class IntBST {
     bool contains(int value) const;  // true if value is in tree
     int getSmallest() const;
     int getLargest() const;
-    void printCard(int value) const;
+    string printCard(int value) const;
 
     // THESE ARE HARDER! DO THESE LAST
     int getPredecessor(int value) const;       // returns the predecessor value of the given value or 0 if there is none

@@ -218,7 +218,7 @@ bool IntBST::remove(int value){
         Node* succ = nullptr;
         if(current->left == nullptr && current->right == nullptr){
             if(current == root){
-                delete root;
+                delete current;
                 root = nullptr;
             }
             else{
@@ -244,9 +244,11 @@ bool IntBST::remove(int value){
             if(current == root){
                 if(current->left){
                     root = current->left;
+                    root->parent = nullptr;
                 }
                 else{
                     root = current->right;
+                    root->parent = nullptr;
                 }
                 delete current;
             }
@@ -255,6 +257,7 @@ bool IntBST::remove(int value){
                 if(current->right != nullptr){
                     child = current->right;
                 }
+                child->parent = current->parent;
                 if(current->parent->left == current){
                     current->parent->left = child;
                 }
@@ -287,7 +290,7 @@ int IntBST::getLargest() const{
     return n->info;
 }
 
-void IntBST::printCard(int value) const{
+string IntBST::printCard(int value) const{
     Node* n = getNodeFor(value, root);
-    cout<<n->card;
+    return n->card;
 }
